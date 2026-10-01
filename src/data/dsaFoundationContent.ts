@@ -219,7 +219,7 @@ export const dsaFoundationContent: Record<string, LearningContent> = {
     sections: [
       {
         title: 'Problem framing and threshold',
-        explanation: 'For n elements, a value must occur at least floor(n / 3) + 1 times. For [3, 2, 3], the answer is [3]. For [1, 2], no value occurs more than 2 / 3 times, so the answer is empty.',
+        explanation: 'For n elements, a value must occur at least floor(n / 3) + 1 times. For [3, 2, 3], the answer is [3]. For [1, 2], both values occur once, and 1 > 2 / 3, so both values satisfy the > n / 3 condition and the answer is [1, 2].',
         example: 'Input: [1, 2, 1, 2, 1, 2, 3]\nThreshold: n / 3 = 2\nOutput: [1, 2]',
         takeaway: 'The threshold is strictly greater than n / 3, not greater than or equal to it.'
       },
