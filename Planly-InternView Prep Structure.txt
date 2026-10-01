@@ -1,0 +1,820 @@
+Sprint 1 — 31h 23m
+Day 1 — 2h 57m
+- Majority Element-I — 10m 46s
+- Java Basics — 1h 12m 54s
+- Introduction to SQL — 1h 21m 34s
+- Why Do We Need an Operating System? — 33m 51s
+Day 2 — 2h 59m
+- Why Networks Exists
+- Introduction to Low Level Design — 21m
+- Network Types — 9m
+- Kadane's Algorithm — 19m
+- Internet and Backbone Networks — 14m
+- Operating System as a Manager — 24m
+- Clients, Servers and Peers — 11m
+- Majority Element-II — 25m
+- Why SQL Exists — 12m
+- How Data Moves in Packets — 18m
+- What Happens When We Open an App? — 17m
+Day 3 — 1h 25m
+- How Databases Work — 19m
+- Maximum Product Subarray in an Array — 18m
+- Why Do We Need Layered Architecture — 9m
+- How Many Apps Run at the Same Time? — 16m
+- Software Design Principles — 23m
+Day 4 — 2h 55m
+- OSI Model — 1h 4m
+- Database Systems — 10m
+- Sort an Array of 0s, 1s, and 2s — 24m
+- OS and Protection — 15m
+- Installation and Tools — 16m
+- Process Basics — 15m
+- What Is OOP? — 16m
+- File Systems vs Database Management Systems — 15m
+Day 5 — 5h 59m
+- 3 Sum
+- Program vs Process vs Thread
+- Classes and Objects
+- Data Abstraction, Schemas, Instances, and Data Independence
+- Practice: Classes and Objects
+- Process States and Process Control Block
+- DBMS Components and End-to-End Query Flow
+- Single Responsibility Principle
+- How Data Travels Up the OSI Model
+- TCP/IP Model
+- Next Permutation
+- Database Users, Roles, and Deployment Architectures
+- Process Creation and Termination
+- OSI vs TCP/IP
+- Encapsulation and Decapsulation
+- Physical Layer
+- Data Models and Database Families
+- 4 Sum
+- Transmission Media
+- Attributes and Methods
+Day 6 — 7h 23m
+- Database and Table Basics
+- Twisted Pair Cable
+- Open-Closed Principle
+- Scheduling Queues and Schedulers
+- Fiber Optic Cable
+- Practice: Attributes and Methods
+- Merge Two Sorted Arrays Without Extra Space
+- Coaxial Cable
+- Context Switching in OS
+- Full Duplex vs Half Duplex
+- Network Device
+- CPU Scheduling Basics
+- Trapping Rainwater
+- First Come First Serve Scheduling
+- Liskov Substitution Principle
+- Constructors
+- Shortest Job First Scheduling
+- MAC Address
+- Shortest Remaining Time First Scheduling
+- Error Detection
+- Count Inversions
+Day 7 — 7h 45m
+- Practice: Constructors
+- Highest Response Ratio Next Scheduling
+- SQL Basics and Commands
+- Round Robin Scheduling
+- Medium Access and CSMA
+- Working with Databases in SQL
+- Reverse Pairs
+- SQL Data Types
+- Priority Scheduling
+- Address Resolution Protocol
+- Creating and Managing Tables in SQL
+- Interface Segregation Principle
+- Multilevel Queue Scheduling
+- Multilevel Feedback Queue Scheduling
+- Network Access Control
+- Primary Key
+- Encapsulation
+- Why Do We Need STP?
+- Two Sum
+- Practice: Encapsulation
+- Kernel in OS
+- Dependency Inversion Principle
+- Foreign Key
+- Types of Operating Systems
+- Longest Consecutive Sequence in an Array
+- Constraints in SQL
+- Spanning Tree Protocol
+- Types of Kernel Structures
+
+==================================================================
+## Sprint 2 — 29h 53m
+
+### Day 1 — 2h 27m
+
+- Longest Subarray with Sum K — 40m
+- Why OS Schedulers Can't Implement Textbook Scheduling Algorithms — 18m
+- NULL vs 0 vs Empty String — 2m
+- DDL vs DML — 3m
+- Access Modifiers — 17m
+- Query Lifecycle — 4m
+- Unified Modeling Language (UML) — 10m
+- Indexing in SQL — 14m
+- Network Topologies and VLANs Introduction — 4m
+- Multicore Scheduling — 12m
+- Physical Topologies — 23m
+
+### Day 2 — 2h 47m
+
+- Practice: Access Modifiers — 45m
+- Entities, Entity Sets, and Attributes — 15m
+- Load Balancing in OS — 20m
+- Count Subarrays with Given Sum — 22m
+- Class UML Diagrams — 38m
+- Relationships and Structural Constraints — 15m
+- Hybrid Topology — 4m
+- Logical Topologies — 8m
+
+### Day 3 — 1h 57m
+
+- CPU Affinity, Cache Locality, and NUMA — 17m
+- Weak Entities and Enhanced ER Modeling — 15m
+- Ethernet Switching — 13m
+- Count Subarrays with Given XOR K — 23m
+- Inheritance — 36m
+- Threads in Operating System — 13m
+
+### Day 4 — 1h 20m
+
+- Virtual LANs — 19m
+- ER/EER-to-Relational Mapping — 15m
+- Threads vs Processes — 14m
+- Find Peak Element — 32m
+
+### Day 5 — 5h 58m
+
+- Database Design Fundamentals — 1h 50m
+- Switching vs Routing — 3m
+- Introduction to Network Layer — 14m
+- What Memory Is Shared Between Threads? — 9m
+- Practice: Inheritance — 45m
+- User-Level Threads vs Kernel-Level Threads — 15m
+- IPv4 Introduction — 27m
+- Find Minimum in Rotated Sorted Array — 15m
+- Multithreading Models in OS — 13m
+- Search in Rotated Sorted Array II — 12m
+- POSIX Threads — 11m
+- IPv4 Datagram — 28m
+- Single Element in Sorted Array — 22m
+- Thread Pools — 18m
+- Polymorphism — 16m
+
+### Day 6 — 7h 58m
+
+- Introduction to Design Patterns — 10m
+- IP Addressing Modes — 9m
+- Concurrency vs Parallelism — 13m
+- Practice: Polymorphism — 45m
+- Search in 2D Matrix II — 15m
+- Private vs Public IP — 10m
+- Multiprogramming vs Multitasking vs Multiprocessing vs Multithreading — 9m
+- Classful Addressing — 7m
+- Find Peak Element II — 20m
+- Thread Safety, Reentrancy, and Race Condition — 18m
+- Singleton Design Pattern — 25m
+- Subnetting — 11m
+- Importance, Raw Data and Pain — 12m
+- Common Interview Questions — 16m
+- Find Nth Root of a Number — 20m
+- Race Conditions in Operating Systems — 30m
+- Core Concepts (Overview) — 5m
+- Abstraction — 29m
+- Mental Model (First Principle) — 11m
+- CIDR — Classless Addressing — 16m
+- Koko Eating Bananas — 20m
+- Schema Design — 29m
+- IPv6 Introduction — 23m
+- Critical Section Problem and Mutual Exclusion — 30m
+- Practice: Abstraction — 45m
+
+### Day 7 — 7h 26m
+
+- Aggressive Cows — 26m
+- Entity and Attributes — 3m
+- IPv6 Datagram — 14m
+- Relationships, Cardinality, and Optionality — 15m
+- Factory Method — 16m
+- Dekker’s Algorithm — 30m
+- Book Allocation Problem — 27m
+- IPv6 over IPv4 — 5m
+- Everything About Keys — 10m
+- Router vs Forwarding — 13m
+- Normalisation and Their Forms — 24m
+- Interfaces — 20m
+- Routing Tables Basics — 11m
+- Peterson’s Algorithm — 30m
+- Matrix Median — 23m
+- Static Routing — 5m
+- Dynamic Routing — 10m
+- Practice: Interfaces — 45m
+- Formal Relational Model and Integrity Constraints — 15m
+- Builder Pattern — 24m
+- Distance Vector Routing and RIP — 7m
+- Kth Element of 2 Sorted Arrays — 10m
+- Routing Loop and Prevention — 18m
+- Fundamental Relational Algebra — 15m
+- Bakery Algorithm — 30m
+
+
+===================================================================
+
+## Sprint 3 — 31h 48m
+
+### Day 1 — 2h 57m
+
+- Median of 2 Sorted Arrays — 50m
+- Joins and Extended Relational Algebra — 15m
+- Link State Routing and OSPF — 12m
+- Hybrid Routing and EIGRP — 3m
+- Static Keyword — 20m
+- Tuple and Domain Relational Calculus — 15m
+- Border Gateway Protocol — 17m
+- Hardware Synchronization Principles — 30m
+- Views and Materialized Views — 15m
+
+### Day 2 — 2h 49m
+
+- Transport Layer Introduction — 14m
+- Practice: Static Keyword — 45m
+- Longest Substring Without Repeating Characters — 22m
+- Abstract Factory — 26m
+- Triggers, Stored Routines, and Database-Side Logic — 15m
+- Test-and-Set — 30m
+- Port and Sockets — 17m
+
+### Day 3 — 1h 48m
+
+- Redundancy and Update Anomalies — 15m
+- Maximum Points You Can Obtain from Cards — 11m
+- UDP — 10m
+- TCP I: Connection Setup and Numbering — 28m
+- Max Consecutive Ones III — 29m
+- Functional Dependencies and Keys — 15m
+
+### Day 4 — 2h 48m
+
+- Compare-and-Swap — 30m
+- Association, Aggregation, and Composition — 23m
+- Armstrong’s Axioms, Attribute Closure, and Minimal Cover — 15m
+- Practice: Composition — 45m
+- TCP II: Reliability, Flow Control, and Sliding Window — 15m
+- Longest Repeating Character Replacement — 25m
+- First, Second, Third, and Boyce-Codd Normal Forms — 15m
+
+### Day 5 — 5h 55m
+
+- Locks, Mutexes, and Types of Locks — 30m
+- TCP III: Congestion Control and Connection Closing — 17m
+- Decomposition Quality and Normalization Algorithms — 15m
+- Prototype Pattern — 20m
+- Longest Substring With At Most K Distinct Characters — 21m
+- When to Choose TCP/UDP — 5m
+- Multivalued Dependencies, 4NF, Join Dependencies, and 5NF — 15m
+- Semaphores — 30m
+- Application Layer Introduction — 4m
+- HTTP Request-Response Model — 7m
+- Object Cloning — 15m
+- Minimum Window Substring — 26m
+- Query Fundamentals — 27m
+- HTTP Methods and Status Codes — 17m
+- Practice: Object Cloning — 45m
+- Mutex vs Semaphores — 30m
+- HTTP Versions — 31m
+
+### Day 6 — 7h 40m
+
+- Number of Substrings Containing All Three Characters — 19m
+- SELECT and FROM — 1m
+- WHERE — 2m
+- Comparison Operators — 2m
+- Logical Operators — 6m
+- Adapter Pattern — 17m
+- Arithmetic Operators — 4m
+- ORDER BY and LIMIT — 2m
+- DISTINCT and AS (Aliases) — 2m
+- Binary Subarrays With Sum — 20m
+- Big Countries — 15m
+- Producer-Consumer Problem — 30m
+- HTTP/3 and QUIC — 14m
+- Exception Handling — 34m
+- Profitable Customers in 2021 — 15m
+- HTTPS and TLS — 15m
+- Count Number of Nice Subarrays — 4m
+- Power Set — 20m
+- Odd Non-Boring Movies — 15m
+- Condition Variables in OS — 30m
+- Cookies, Sessions, and Tokens — 22m
+- Decorator Pattern — 26m
+- Generate Parentheses — 22m
+- Generics — 29m
+- Filtering Essentials — 24m
+- REST APIs — 9m
+- Monitoring in OS — 30m
+- WebSockets — 8m
+- Letter Combinations of a Phone Number — 12m
+- IS NULL vs IS NOT NULL, IN, and NOT IN — 7m
+- File Transfer Protocol — 4m
+
+### Day 7 — 7h 51m
+
+- Design Principles — 23m
+- Email Protocols — 7m
+- BETWEEN and NOT BETWEEN — 6m
+- Combination Sum — 16m
+- NAT and Why Do We Need It? — 10m
+- LIKE and NOT LIKE — 7m
+- Filter Records Excluding a Specific Pattern — 15m
+- Readers-Writers Problem — 30m
+- NAT Packet Flow — 9m
+- Combination Sum II — 15m
+- Object Lifecycle — 18m
+- Types of NAT — 7m
+- Find Records Excluding a Given Set of Values — 15m
+- SNAT, DNAT, and Port Forwarding — 7m
+- Subsets II — 21m
+- NAT Limitations — 13m
+- Facade Pattern — 17m
+- Find Salaries Outside the Expected Range — 15m
+- Sleeping Barber Problem — 30m
+- DNS — 17m
+- Palindrome Partitioning — 18m
+- Non-Referred Customers — 15m
+- DNS Record Types — 6m
+- Word Search — 19m
+- Data Summarization — 39m
+- DNS Security — 6m
+- Dining Philosophers Problem — 30m
+- DNSSEC — 6m
+- Dynamic Host Configuration Protocol (DHCP) — 10m
+- N-Queen — 24m
+=========================================================================
+Sprint 4 — 30h 59m
+Day 1 — 2h 38m
+- Composite Pattern — 21m
+- What Is Switching and Why? — 6m
+- Fundamental Switching Techniques — 4m
+- Deadlock in Operating Systems — 30m
+- Circuit Switching — 13m
+- Fundamentals of GROUP BY — 11m
+- Sudoku Solver — 31m
+- Packet Switching — 22m
+- Basic Aggregate Functions (MIN, MAX, SUM, AVG) — 6m
+- COUNT Functions — 14m
+Day 2 — 2h 31m
+- Conditions for Deadlock — 30m
+- Datagram Packet Switching — 8m
+- HAVING Clause — 3m
+- Find Middle of Linked List — 14m
+- First Login Analysis — 15m
+- Virtual Circuit Packet Switching — 11m
+- Proxy Pattern — 17m
+- Find the Intersection Point of Y Linked List — 32m
+- MPLS — 6m
+- Employee Work Time Summary — 15m
+Day 3 — 1h 51m
+- Resource Allocation Graph — 30m
+- Circuit Switching vs Virtual Packet Switching — 4m
+- Message Switching — 12m
+- Unique Subjects per Teacher — 15m
+- Why Packet Switching Became Backbone of Internet — 3m
+- Comparisons Between All 3 — 2m
+- FAQs: Switching — 4m
+- Check if Linked List Is Palindrome — 20m
+- User Follower Count — 15m
+- Why Network Security? — 6m
+Day 4 — 2h 48m
+- Wait-for Graph, Safe State, and Unsafe State — 30m
+- CIA Triad — 11m
+- Bridge Pattern — 18m
+- CRM Automotive Sales Analysis — 15m
+- AAA Framework — 10m
+- Detect a Loop in Linked List — 20m
+- Common Network Security Threats — 19m
+- Highest Order Placing Customer — 15m
+- Deadlock Prevention — 30m
+Day 5 — 5h 51m
+- Remove Nth Node from Back of Linked List — 16m
+- Frequent Actor-Director Duos — 15m
+- Firewalls and Types — 19m
+- Find Starting Point in Linked List — 21m
+- Large Classes — 15m
+- Deadlock Avoidance — 30m
+- Firewall Type Comparison: L3, L4, and L7 — 3m
+- Flyweight Pattern — 19m
+- IDPS — 6m
+- VPNs — 16m
+- Email Duplicates — 15m
+- Length of Loop in Linked List — 14m
+- Merging Query Results — 17m
+- Zero Trust Architecture — 6m
+- Reverse a Linked List — 32m
+- Banker’s Algorithm — 30m
+- Introduction to Cryptography — 4m
+- Security Goals of Cryptography — 2m
+- Basic Cryptography Terms — 3m
+- Symmetric Encryption — 5m
+- UNION — 8m
+- Asymmetric Cryptography — 14m
+- UNION ALL — 1m
+- Difference Between UNION and UNION ALL — 1m
+- Intersection — 6m
+- Merge Two Sorted Lists — 18m
+- Combine Active and Archived Users — 15m
+Day 6 — 7h 32m
+- Deadlock Detection — 30m
+- Diffie-Hellman Key Exchange — 11m
+- Iterator Pattern — 25m
+- Hybrid Encryption — 4m
+- Merge Recent Orders from Multiple Sources — 15m
+- Hash Functions — 16m
+- Sort a Linked List of 0s, 1s, and 2s — 22m
+- Combine Sales Records Without Deduplication — 15m
+- Deadlock Recovery — 30m
+- MAC and HMAC — 11m
+- Add Two Numbers in Linked List — 14m
+- Digital Signatures — 7m
+- Reshape Products Data — 15m
+- Certificate Authority and Chain of Trust — 7m
+- Rotate a Linked List — 12m
+- Public Key Infrastructure — 3m
+- Joins Deep Dive — 1h 13m
+- Certificate Pinning — 4m
+- Starvation vs Deadlock vs Livelock — 30m
+- TLS and SSL — 6m
+- Sort Linked List — 22m
+- TLS Handshake and Forward Secrecy — 6m
+- Wireless Networking Introduction — 6m
+- Observer Pattern — 18m
+- Basics of Wireless Networking — 17m
+- Clone Linked List with Random and Next Pointer — 33m
+Day 7 — 7h 48m
+- Priority Inversion — 30m
+- Wi-Fi Joining Flow — 11m
+- WPA/WPA2/WPA3 Security Handshake — 19m
+- Reverse Linked List in Groups of K — 24m
+- Debugging Concurrency Bugs — 30m
+- IEEE 802.11 and Wi-Fi Generations — 8m
+- Strategy Pattern — 12m
+- RIGHT JOIN — 23m
+- Why Wi-Fi Speed Drops in Real Life — 8m
+- Flattening of Linked List — 33m
+- How Wi-Fi Avoids Collisions — 9m
+- Wi-Fi Frame Types — 4m
+- ON vs WHERE — 15m
+- Wi-Fi Security — 9m
+- Command Pattern — 28m
+- Packet Flow: Opening a Website over Wi-Fi — 5m
+- LEFT JOIN — 6m
+- Introduction to Network Performance — 11m
+- INNER JOIN — 8m
+- Next Greater Element — 18m
+- Metrics Deep Dive — 12m
+- FULL OUTER JOIN — 10m
+- CROSS JOIN — 2m
+- Data Transfer and Bottlenecks, BDP — 10m
+- Next Greater Element II — 15m
+- IMPLICIT JOIN — 4m
+- SELF JOIN — 10m
+- Latency Sources, Delay, and TTFB — 15m
+- Stock Span Problem — 19m
+- NATURAL JOIN — 5m
+- Employees and Their Departments — 15m
+- Congestion, Bufferbloat, and Congestion Collapse Loop — 9m
+- QoS, Traffic Shaping, and Policing — 8m
+- Sum of Subarray Minimums — 23m
+
+===============================================================================
+Sprint 5 — 31h 38m
+Day 1 — 2h 45m
+- Customer Orders Overview — 15m
+- Rate Limiting — 6m
+- Fixed Window Counter — 5m
+- Employees With Confirmed Salary Records — 15m
+- Sliding Window Log — 4m
+- Template Method — 17m
+- Sliding Window Counter — 6m
+- Sum of Subarray Ranges — 10m
+- Token Bucket — 3m
+- Generate All Possible User-Category Pairs — 15m
+- Leaky Bucket — 3m
+- Remove K Digits — 15m
+- Concurrency Limiter — 2m
+- Load Balancing Fundamentals — 10m
+- Employees With or Without Salary Records — 15m
+- L4 vs L7 Load Balancers — 4m
+- Sliding Window Maximum — 20m
+Day 2 — 2h 49m
+- Load Balancing Algorithms — 30m
+- Match Employees With Their Salaries — 15m
+- Largest Rectangle in a Histogram — 31m
+- State Pattern — 21m
+- Employees Earning More Than Their Manager — 15m
+- CDN Caching and Lifestyle — 30m
+- Students Enrolled in Courses — 15m
+- Maximum Rectangles — 12m
+Day 3 — 1h 55m
+- Sales Analysis — 15m
+- What Happens When You Type google.com — 30m
+- Implement Min Stack — 21m
+- Minimum Distance Between Points — 15m
+- Asteroid Collision — 17m
+- Chain of Responsibility — 17m
+Day 4 — 2h 41m
+- Suspended Accounts — 15m
+- What Happens When DNS Fails? — 30m
+- Celebrity Problem — 16m
+- Find Team Size for Each Employee — 15m
+- LRU Cache — 25m
+- Average Experience by Project — 15m
+- What Happens When You Connect to Public Wi-Fi? — 30m
+- Warehouse Stock Manager — 15m
+Day 5 — 5h 55m
+- Visitor Pattern — 23m
+- LFU Cache — 45m
+- Table Join Operation — 15m
+- How Does a CDN Serve an Image/Video? — 30m
+- Inactive Customers — 15m
+- Students Enrolled in Non-Existent Departments — 15m
+- Jump Game I — 10m
+- Low Bonus Employees — 15m
+- Valid Parenthesis Checker — 25m
+- Mediator Pattern — 14m
+- Available Seat Streaks — 15m
+- Candy — 30m
+- Visitors Without Transactions — 15m
+- A and B Buyers Without C — 15m
+- Memento Pattern — 17m
+- N Meetings in One Room — 13m
+- Product Selling Price Report — 15m
+- Insert Interval — 13m
+- Updated Bank Balances — 15m
+Day 6 — 7h 42m
+- Non-overlapping Intervals — 8m
+- Most Frequent Travellers — 15m
+- Minimum Platforms Required for a Railway — 18m
+- Suggested Pages — 15m
+- Multithreading and Concurrency — 40m
+- Job Sequencing Problem — 16m
+- Everything About Subqueries — 1h 2m
+- Heapify Algorithm — 23m
+- Build Heap from a Given Array — 15m
+- Implement Min Heap — 12m
+- Kth Largest Element in an Array — 44m
+- Introduction to Subqueries (IN) — 35m
+- EXISTS and NOT EXISTS — 15m
+- Find Median from Data Stream — 45m
+- Creating and Managing Threads — 35m
+- Correlated Subqueries — 11m
+- Contest Participation Rate — 15m
+- High-Report Managers — 15m
+- Level Order Traversal — 8m
+- All-Product Buyers — 15m
+Day 7 — 7h 51m
+- Maximum Width of Binary Tree — 21m
+- Highest Non-Repeating Number — 15m
+- Right/Left View of Binary Tree — 12m
+- Find First Device Logged In by Each Player — 15m
+- Top View of Binary Tree — 9m
+- Print Nodes at Distance K in Binary Tree — 16m
+- Salespersons Without RED Orders — 15m
+- Thread Pools and Executors — 32m
+- Minimum Time to Burn Binary Tree from a Node — 17m
+- Employees With Highest Salary in Each Department — 15m
+- Most Recent Order for Each Product — 15m
+- Vertical Order Traversal — 18m
+- Transactions with Maximum Amount Per Day — 15m
+- Print Root-to-Leaf Path — 10m
+- Diameter of Binary Tree — 13m
+- Incomplete Employee Records — 15m
+- LCA in Binary Tree — 13m
+- Quiet Students in All Exams — 15m
+- Boundary Traversal — 9m
+- Top Grade per Student — 15m
+- Construct Binary Tree from Preorder and Inorder — 18m
+- Swap Consecutive Seats — 15m
+- Thread Safety and Synchronization — 29m
+- Morris Inorder Traversal — 19m
+- Safe Investment Countries — 15m
+- Maximum Path Sum — 17m
+- Tennis Grand Slam Winners — 15m
+- Serialize and Deserialize Binary Tree — 16m
+- Football Team Scores — 15m
+- Insert a Given Node in BST — 7m
+
+===========================================================================
+Sprint 6 — 31h 29m
+Day 1 — 2h 52m
+- Order Count per Customer — 15m
+- LCA in BST — 8m
+- Delete a Node in BST — 15m
+- Boolean Expression Evaluator — 15m
+- Inorder Successor and Predecessor in BST — 10m
+- Immediate First Orders Percentage — 15m
+- Locks and Synchronization Mechanism — 31m
+- Kth Smallest and Largest Element in BST — 8m
+- Find All Employees Reporting to Head of Company — 15m
+- Check if a Tree Is BST — 9m
+- Construct BST from Preorder Traversal — 16m
+- Orphan Employees — 15m
+Day 2 — 2h 44m
+- Two Sum in BST — 14m
+- Editing Data and Tables — 38m
+- Correct BST with Two Nodes Swapped — 16m
+- Largest BST in Binary Tree — 17m
+- INSERT — 6m
+- Flood Fill Algorithm — 20m
+- UPSERT — 7m
+- Deadlock and Prevention Techniques — 26m
+- UPDATE — 5m
+- DELETE — 3m
+- ALTER — 12m
+Day 3 — 1h 54m
+- Number of Islands — 24m
+- TRUNCATE — 1m
+- DELETE vs TRUNCATE vs DROP — 2m
+- System Settings — 15m
+- Rotten Oranges — 22m
+- Employee Salary — 15m
+- Storage Hierarchy, Pages, Records, and Buffers — 15m
+- Distance of Nearest Cell Having One — 20m
+Day 4 — 2h 55m
+- File Organization — 15m
+- Producer Consumer Problem — 17m
+- Surrounded Regions — 23m
+- Index Classification and Design — 15m
+- B-Trees and B+ Trees — 15m
+- Number of Distinct Islands — 18m
+- Static and Dynamic Hashing — 15m
+- Detect Cycle in an Undirected Graph — 38m
+- Dependency Injection — 19m
+Day 5 — 5h 45m
+- Storage, Keys and Query Performance — 1h 53m
+- Bipartite Graph — 32m
+- Exception Handling (LLD) — 23m
+- Detect Cycle in Directed Graph — 23m
+- Topological Sort / Kahn’s Algorithm — 26m
+- Course Schedule II — 11m
+- Where Rows Actually Live — 56m
+- Alien Dictionary — 20m
+- Building Resilient Systems — 19m
+- Kosaraju’s Algorithm — 22m
+Day 6 — 7h 41m
+- Bridges in Graph — 23m
+- How a B+ Tree Is Built with Data — 29m
+- All About APIs — 55m
+- Articulation Point in Graph — 21m
+- Why the Wrong Primary Key Can Quietly Destroy You — 16m
+- Shortest Path in Undirected Graph with Unit Weights — 16m
+- Index Strategy at Scale — 13m
+- Shortest Path in DAG — 26m
+- From SQL to an Executable Plan — 15m
+- Algorithms for Selection, Projection, Sorting, and Aggregation — 15m
+- Dijkstra’s Algorithm — 47m
+- Join Processing Algorithms — 15m
+- Cost-Based Query Optimization — 15m
+- Performance and Debugging — 1h 21m
+- Path with Minimum Effort — 24m
+- Cheapest Flight Within K Stops — 23m
+- Bellman-Ford Algorithm — 27m
+Day 7 — 7h 38m
+- Database Design and Integration — 24m
+- Raw Data Setup and Stored Procedures — 37m
+- Floyd-Warshall Algorithm — 30m
+- Word Ladder I — 28m
+- Debugging Queries with EXPLAIN — 22m
+- How to Approach an LLD Interview — 36m
+- Query Performance — 9m
+- Word Ladder II — 48m
+- Debugging Correctness — 12m
+- Permissions and Transactions Part 1 — 41m
+- Disjoint Set — 41m
+- Privileges and Roles — 20m
+- GRANTS — 13m
+- Find the MST Weight — 31m
+- GRANT ALL and WITH GRANT OPTION — 3m
+- ALTER USER — 1m
+- REVOKE — 1m
+- Permissions and Transactions Part 2 — 1h 1m
+Sprint 7 — 31h 31m
+Day 1 — 3h
+- Parking Lot Design — 38m
+- Number of Operations to Make Network Connected — 14m
+- Number of Islands II — 25m
+- Making a Large Island — 26m
+- Connection, Connection Pool, and Commit — 22m
+- Rollback — 1m
+- Savepoint — 5m
+- Frog Jump with K Distances — 16m
+- Internal Working of Transactions, Timeout, and Deadlock — 33m
+Day 2 — 2h 59m
+- House Robber — 9m
+- Ninja’s Training — 51m
+- Parking Lot Code — 29m
+- Transaction Concepts, ACID, and States — 15m
+- Schedules and Concurrency Anomalies — 15m
+- Conflict and View Serializability — 15m
+- Unique Paths II — 12m
+- Recoverable, Cascadeless, and Strict Schedules — 15m
+- Best Time to Buy and Sell Stock with Transaction Fees — 6m
+- Best Time to Buy and Sell Stock IV — 12m
+Day 3 — 1h 48m
+- Lock-Based Protocols and Two-Phase Locking — 15m
+- 0 and 1 Knapsack — 40m
+- Deadlock Handling — 15m
+- Logging Framework Design — 38m
+Day 4 — 2h 29m
+- Timestamp Ordering, Optimistic Control, and MVCC — 15m
+- SQL Isolation Levels — 15m
+- Partition Set into Two Subsets with Minimum Absolute Sum Difference — 29m
+- Failures, Storage, and Recovery Goals — 15m
+- Log-Based Recovery and Write-Ahead Logging — 15m
+- Target Sum — 8m
+- Coin Change II — 22m
+- Checkpoints and ARIES Intuition — 15m
+- Shadow Paging, Backup, and Point-in-Time Recovery — 15m
+Day 5 — 5h 31m
+- Longest Common Subsequence — 46m
+- Declarative Integrity Beyond Keys — 15m
+- Logging Framework Code — 22m
+- Authorization, Views, and Auditing — 15m
+- Database Security Threats and Protection — 15m
+- Longest Common Substring — 14m
+- Metadata, Statistics, Maintenance, and Observability — 15m
+- Longest Palindromic Subsequence — 9m
+- Longest Increasing Subsequence — 40m
+- Distributed Database Foundations — 15m
+- Partitioning, Sharding, and Distributed IDs — 15m
+- Traffic Signal System Design — 1h
+- Replication, Consistency, and CAP/PACELC — 15m
+- Number of Longest Increasing Subsequences — 20m
+- Distributed Transactions and Coordination — 15m
+Day 6 — 7h 55m
+- Edit Distance — 37m
+- NoSQL Data Models and SQL-vs-NoSQL Decisions — 15m
+- OLTP, OLAP, Warehousing, and Columnar Storage — 15m
+- Schema-Design Capstone — 15m
+- Wildcard Matching — 43m
+- Storage and Query-Plan Lab — 15m
+- Concurrency and Recovery Lab — 15m
+- GATE and Semester Problem Track — 15m
+- Matrix Chain Multiplication — 1h 1m
+- Interview Depth by Candidate Level — 15m
+- Final Coverage and Source Alignment — 15m
+- Traffic Signal System Code — 24m
+- Palindrome Partitioning II — 22m
+- Trie Implementation and Advanced Operations — 22m
+- Longest Word with All Prefixes — 25m
+- Number of Distinct Substrings in a String — 17m
+- Vending Machine Design — 47m
+- Maximum XOR of Two Numbers in an Array — 34m
+- Maximum XOR with an Element from an Array — 23m
+Day 7 — 7h 49m
+- Rabin-Karp Algorithm — 34m
+- Z Function — 35m
+- KMP Algorithm / LPS Array — 29m
+- Vending Machine Code — 27m
+- Shortest Palindrome — 7m
+- Power Set Bit Manipulation — 12m
+- Single Number II — 30m
+- Single Number III — 24m
+- Task Management System Design — 51m
+- Find Repeating and Missing Number — 41m
+- Print All Primes Till N — 18m
+- Task Management System Code — 22m
+- PubSub System Design — 42m
+- PubSub System Code — 25m
+- ATM Machine Design — 48m
+- ATM Machine Code — 24m
+
+=====================================================================
+
+## Sprint 8 — 6h 32m
+
+### Day 1 — 2h 47m
+
+- Hotel Management System Design — 51m
+- Hotel Management System Code — 19m
+- Elevator System Design — 44m
+- Elevator System Code — 26m
+- Digital Wallet Design — 27m
+
+### Day 2 — 2h 48m
+
+- Types of Locking Mechanism — 24m
+- Digital Wallet Code — 19m
+- Ride Booking App Design — 45m
+- Ride Booking App Code — 24m
+- Music Streaming Platform Design — 42m
+- Streaming Protocols — 14m
+
+### Day 3 — 57m
+
+- Music Streaming Platform Code — 27m
+- test — 30m

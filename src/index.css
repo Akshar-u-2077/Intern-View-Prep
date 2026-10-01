@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+  --color-term-bg: #070a0e;
+  --color-term-panel: #0d1117;
+  --color-term-panelHeader: #121820;
+  --color-term-panelBorder: #1c2433;
+  --color-term-card: #0f141c;
+  --color-term-cardHover: #151d28;
+  --color-term-text: #c9d1d9;
+  --color-term-muted: #8b949e;
+  --color-term-darkMuted: #484f58;
+  --color-term-green: #00ff66;
+  --color-term-greenDim: #00cc52;
+  --color-term-cyan: #00f0ff;
+  --color-term-cyanDim: #00b8c4;
+  --color-term-purple: #b537f2;
+  --color-term-purpleDim: #8b24bd;
+  --color-term-amber: #ffaa00;
+  --color-term-amberDim: #cc8800;
+  --color-term-red: #ff3366;
+  --color-term-redDim: #cc224e;
+  
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+@layer base {
+  body {
+    background-color: #070a0e;
+    color: #c9d1d9;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+}
+
+
+/* Cyberpunk scanline effect */
+.scanlines {
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.25) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 4px, 6px 100%;
+  pointer-events: none;
+}
+
+/* Custom terminal scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #070a0e;
+}
+::-webkit-scrollbar-thumb {
+  background: #1c2433;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00ff66;
+}
+
+/* Glowing borders */
+.glow-border-green {
+  border-color: rgba(0, 255, 102, 0.4);
+  box-shadow: 0 0 12px rgba(0, 255, 102, 0.2);
+}
+
+.glow-border-cyan {
+  border-color: rgba(0, 240, 255, 0.4);
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.2);
+}
+
+.glow-border-purple {
+  border-color: rgba(181, 55, 242, 0.4);
+  box-shadow: 0 0 12px rgba(181, 55, 242, 0.2);
+}
