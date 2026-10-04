@@ -5,7 +5,7 @@ const MAJORITY_ELEMENT_I = 's1_d1_t1_majority-element-i';
 const KADANES_ALGORITHM = 's1_d2_t4_kadanes-algorithm';
 
 export const dsaFoundationContent: Record<string, LearningContent> = {
-  's1_d1_t1_majority-element-i': {
+  's1_d5_t1_3-sum': {
     topicId: 's1_d1_t1_majority-element-i',
     contentVersion: 1,
     lastReviewedAt: '2026-10-01',
@@ -501,7 +501,745 @@ export const dsaFoundationContent: Record<string, LearningContent> = {
       { title: 'Sort Colors', url: 'https://leetcode.com/problems/sort-colors/', type: 'practice', description: 'Exact Dutch National Flag problem requiring in-place linear-time partitioning.', source: 'LeetCode' },
       { title: 'Dutch National Flag Problem', url: 'https://www.geeksforgeeks.org/sort-an-array-of-0s-1s-2s/', type: 'tutorial', description: 'Focused explanation of the low, mid, and high partition invariant.', source: 'GeeksforGeeks' }
     ]
-  }
-};
-
-export const structuredDsaTopicIds = Object.keys(dsaFoundationContent);
+  },
+  's1_d5_t1_3-sum': {
+    topicId: 's1_d5_t1_3-sum',
+    contentVersion: 1,
+    lastReviewedAt: '2026-10-01',
+    estimatedMinutes: 40,
+    overview: 'Find the contiguous subarray with the largest sum. Contiguous means the chosen elements occupy one uninterrupted range; skipping elements to form a subsequence is a different problem.',
+    whyItMatters: 'Kadane’s Algorithm demonstrates a reusable running-state pattern: at each value, either extend the best subarray ending immediately before it or start a new subarray at the current value.',
+    prerequisites: [JAVA_BASICS],
+    sections: [
+      {
+        title: 'Problem framing',
+        explanation: 'For [-2, 1, -3, 4, -1, 2, 1, -5, 4], the best contiguous range is [4, -1, 2, 1] with sum 6. The range cannot skip -1 even though skipping it would form a different non-contiguous selection.',
+        example: 'Input: [-2, 1, -3, 4, -1, 2, 1, -5, 4]\nBest subarray: [4, -1, 2, 1]\nOutput: 6',
+        takeaway: 'The answer is a contiguous interval, so every decision must preserve adjacency.'
+      },
+      {
+        title: 'Brute force and its cost',
+        explanation: 'Enumerate every start and end pair and accumulate each range. With a running sum per start this takes O(n^2) time and O(1) extra space. Recomputing every range sum from scratch would be O(n^3).',
+        example: 'for each start: extend end and update the range sum',
+        takeaway: 'The repeated work is reconsidering the same prefix of a range after its sum has already become unhelpful.'
+      },
+      {
+        title: 'Start fresh or extend',
+        explanation: 'For a subarray ending at the current value, the only useful choices are to start at the current value or extend the best subarray that ended at the previous position. Any earlier prefix is already summarized by that previous best.',
+        example: 'currentBest = max(value, currentBest + value);',
+        takeaway: 'A negative accumulated prefix can be discarded when the current value is a better starting point.'
+      },
+      {
+        title: 'Running state and invariant',
+        explanation: 'currentBest is the largest sum of any non-empty subarray ending exactly at the current index. globalBest is the largest currentBest seen anywhere. Keeping these two values is sufficient because future ranges can only extend the immediately previous ending position.',
+        example: 'currentBest = Math.max(value, currentBest + value);\nglobalBest = Math.max(globalBest, currentBest);',
+        takeaway: 'The state remembers both the best ending here and the best answer seen overall.'
+      },
+      {
+        title: 'Worked walkthrough',
+        explanation: 'For [-2, 1, -3, 4, -1, 2, 1, -5, 4], the current/global pairs are (-2,-2), (1,1), (-2,1), (4,4), (3,4), (5,5), (6,6), (1,6), (5,6). The answer is 6.',
+        example: 'value:        -2   1  -3   4  -1   2   1  -5   4\ncurrentBest: -2   1  -2   4   3   5   6   1   5\nglobalBest:  -2   1   1   4   4   5   6   6   6',
+        takeaway: 'The global answer does not have to end at the final element.'
+      },
+      {
+        title: 'All-negative arrays',
+        explanation: 'Initialize both values from the first array element, not zero. For [-8, -3, -6], the correct answer is -3. Starting globalBest at zero would incorrectly claim that an empty subarray with sum zero is allowed.',
+        example: 'int currentBest = values[0];\nint globalBest = values[0];',
+        takeaway: 'Kadane’s version here requires a non-empty subarray, so zero is not a safe default.'
+      },
+      {
+        title: 'Complexity and Java details',
+        explanation: 'The algorithm makes one pass and uses O(1) auxiliary space. Use int when the problem constraints fit int; otherwise use long for sums to avoid overflow. If the actual range is required, store the best start and end whenever globalBest improves.',
+        takeaway: 'The optimized sum is O(n) time and O(1) auxiliary space, with initialization and numeric type chosen from the contract.'
+      }
+    ],
+    examples: [{
+      title: 'Current best versus global best',
+      setup: 'Trace the sum state for [-2, 1, -3, 4, -1, 2, 1, -5, 4].',
+      walkthrough: [
+        'At -2, the only non-empty subarray ending here has sum -2, so both values are -2.',
+        'At 1, starting fresh gives 1, which beats extending -2 to -1.',
+        'At 4, the best ending here is 4 because the previous current best is negative.',
+        'At -1, extend 4 to get 3; the global best remains 4.',
+        'At 2 and then 1, extending produces 5 and 6, so the global best becomes 6.',
+        'The later -5 reduces the ending sum to 1, but the earlier global answer 6 is preserved.'
+      ],
+      takeaway: 'Current state serves future extensions; global state preserves the best completed answer.'
+    }],
+    codeExamples: [{
+      language: 'java',
+      executionMode: 'standalone',
+      filename: 'KadanesAlgorithm.java',
+      title: 'Maximum subarray sum with Kadane’s Algorithm',
+      code: ['public class KadanesAlgorithm {', '    static int maxSubarraySum(int[] values) {', '        int currentBest = values[0];', '        int globalBest = values[0];', '', '        for (int index = 1; index < values.length; index++) {', '            currentBest = Math.max(values[index], currentBest + values[index]);', '            globalBest = Math.max(globalBest, currentBest);', '        }', '', '        return globalBest;', '    }', '', '    public static void main(String[] args) {', '        int[] values = {-2, 1, -3, 4, -1, 2, 1, -5, 4};', '        System.out.println(maxSubarraySum(values));', '    }', '}'].join('\n'),
+      explanation: 'currentBest stores the best non-empty subarray ending at the current index. globalBest stores the best ending sum seen at any index. Initializing from values[0] keeps all-negative arrays correct.',
+      expectedOutput: '6'
+    }],
+    commonMistakes: ['Initializing the answer to 0 and accidentally allowing an empty subarray when the problem requires a non-empty one.', 'Confusing a contiguous subarray with a subsequence that may skip elements.', 'Tracking only the current sum and losing the best result found earlier.', 'Using int when the input constraints allow the running sum to overflow.'],
+    interviewNotes: ['State the invariant: currentBest is the best non-empty sum ending at the current index.', 'Expected complexity is O(n) time and O(1) auxiliary space.', 'Explain the fresh-start decision as discarding a negative prefix.', 'Follow-up: how would you return the actual start and end indices?', 'Common trap: initializing globalBest to zero for an all-negative input.'],
+    quickChecks: [{
+      question: 'What does currentBest represent in Kadane’s Algorithm?',
+      options: ['The best sum anywhere in the full array', 'The best non-empty sum ending at the current index', 'The number of positive values seen', 'The sum of every value seen so far'],
+      correctAnswer: 'The best non-empty sum ending at the current index',
+      explanation: 'Keeping the best ending at the current position lets the next value decide whether to extend or restart.'
+    }, {
+      question: 'Why should globalBest not start at zero for a non-empty subarray problem?',
+      options: ['Zero cannot be stored in an int', 'An all-negative array may have a negative answer', 'The first value is always positive', 'It would make the loop O(n squared)'],
+      correctAnswer: 'An all-negative array may have a negative answer',
+      explanation: 'For [-8, -3], the correct answer is -3, not zero from an empty selection.'
+    }, {
+      question: 'What decision does each value trigger?',
+      options: ['Sort or reverse the array', 'Start a new range or extend the previous best ending range', 'Add the value to every prior range', 'Choose the smallest value globally'],
+      correctAnswer: 'Start a new range or extend the previous best ending range',
+      explanation: 'Those are the only two contiguous subarrays that can end at the current value while preserving the optimal ending state.'
+    }],
+    practice: [{
+      title: 'Practice: return the best range',
+      prompt: 'Extend Kadane’s Algorithm so it returns the start and end indices of the best non-empty subarray, not only its sum. Dry-run your index updates on [-2, 1, -3, 4, -1, 2, 1, -5, 4] and on [-5, -2, -8].',
+      expectedSkill: 'Maintaining a running DP state while preserving the actual range and handling all-negative input.'
+    }],
+    resources: [
+      { title: 'Maximum Subarray', url: 'https://leetcode.com/problems/maximum-subarray/', type: 'practice', description: 'Exact problem for applying Kadane’s Algorithm and checking all-negative behavior.', source: 'LeetCode' },
+      { title: 'Kadane’s Algorithm', url: 'https://www.geeksforgeeks.org/largest-sum-contiguous-subarray-kadanes-algorithm/', type: 'tutorial', description: 'Focused explanation of the running best-ending-here state.', source: 'GeeksforGeeks' }
+    ]
+  },
+  's1_d5_t2_3-product': {
+    topicId: 's1_d5_t2_3-product',
+    contentVersion: 1,
+    lastReviewedAt: '2026-10-01',
+    estimatedMinutes: 40,
+    overview: 'Find the contiguous subarray with the largest product. Unlike maximum subarray sum, a negative value can turn a very small negative product into the largest positive product when multiplied by another negative value.',
+    whyItMatters: 'This problem teaches why one running state is not enough when an operation can reverse ordering. Tracking both the maximum and minimum product ending at the current position preserves the two values that a future negative number may need.',
+    prerequisites: [KADANES_ALGORITHM],
+    sections: [
+      {
+        title: 'Problem framing',
+        explanation: 'For [2, 3, -2, 4], the best contiguous product is 6 from [2, 3]. For [-2, 3, -4], the answer is 24 because the full range contains two negatives.',
+        example: 'Input: [2, 3, -2, 4]\nOutput: 6',
+        takeaway: 'The best range must remain contiguous, but its sign can change as values are multiplied.'
+      },
+      {
+        title: 'Brute force and its cost',
+        explanation: 'Enumerate every start index, multiply while extending the end, and keep the largest product. This is O(n^2) time and O(1) extra space. A frequency map or sorting cannot capture the order-sensitive product behavior.',
+        takeaway: 'The repeated work is evaluating many ranges that share the same ending product prefixes.'
+      },
+      {
+        title: 'Why maximum product differs from maximum sum',
+        explanation: 'For sums, a negative running sum is always harmful to a future positive addition. For products, the smallest negative product may become the largest positive product after multiplying by a negative value. Therefore, a negative input swaps the roles of the current maximum and minimum.',
+        example: 'currentMax = -2, currentMin = -6, value = -4\nnewMax may be (-6) * (-4) = 24',
+        takeaway: 'Multiplication can reverse order, so preserve both extremes.'
+      },
+      {
+        title: 'Maximum and minimum ending here',
+        explanation: 'At each value, the new maximum and minimum can come from the value alone, the previous maximum times the value, or the previous minimum times the value. If the value is negative, swap the previous max and min before calculating so the formulas stay simple.',
+        example: 'maxEnding = max(value, previousMax * value)\nminEnding = min(value, previousMin * value)',
+        takeaway: 'The pair (maxEnding, minEnding) is the sufficient state for the next position.'
+      },
+      {
+        title: 'Worked walkthrough',
+        explanation: 'For [2, 3, -2, 4], the state begins (2,2), becomes (6,6), then after -2 becomes (-2,-12), and finally becomes (4,-48). The global maximum remains 6. For [-2, 3, -4], the states are (-2,-2), (3,-6), then (24,-12), exposing why the minimum must be retained.',
+        example: 'Input: [-2, 3, -4]\nvalue -2 -> max -2, min -2\nvalue 3  -> max 3, min -6\nvalue -4 -> max 24, min -12',
+        takeaway: 'The minimum state can become the final maximum after a later negative value.'
+      },
+      {
+        title: 'Zero and all-negative inputs',
+        explanation: 'Zero can restart a product because any range crossing zero has product zero. The max/min recurrence naturally considers the value itself, so a value after zero starts a new range. Initialize from the first value so arrays such as [-3, -2, -5] return -2 rather than zero.',
+        takeaway: 'Do not initialize the answer to zero when the required subarray is non-empty.'
+      },
+      {
+        title: 'Complexity and Java details',
+        explanation: 'The algorithm runs in O(n) time and O(1) auxiliary space. Use long instead of int when constraints allow products to exceed the int range. Tracking the actual range requires additional start/end bookkeeping.',
+        takeaway: 'The optimized solution keeps two scalar states instead of every possible product range.'
+      }
+    ],
+    examples: [{
+      title: 'Negative values reverse the useful state',
+      setup: 'Trace [-2, 3, -4].',
+      walkthrough: [
+        'At -2, both maximum and minimum ending products are -2.',
+        'At 3, start fresh with 3 for the maximum, while extending -2 gives -6 for the minimum.',
+        'At -4, the previous minimum -6 becomes valuable because (-6) * (-4) = 24.',
+        'The global answer is therefore 24 from the entire array.'
+      ],
+      takeaway: 'Tracking only the previous maximum would miss the product that becomes optimal after the second negative.'
+    }],
+    codeExamples: [{
+      language: 'java',
+      executionMode: 'standalone',
+      filename: 'MaximumProductSubarray.java',
+      title: 'Maximum product subarray with max/min state',
+      code: ['public class MaximumProductSubarray {', '    static int maxProduct(int[] values) {', '        int currentMax = values[0];', '        int currentMin = values[0];', '        int answer = values[0];', '', '        for (int index = 1; index < values.length; index++) {', '            int value = values[index];', '            if (value < 0) {', '                int temporary = currentMax;', '                currentMax = currentMin;', '                currentMin = temporary;', '            }', '', '            currentMax = Math.max(value, currentMax * value);', '            currentMin = Math.min(value, currentMin * value);', '            answer = Math.max(answer, currentMax);', '        }', '', '        return answer;', '    }', '', '    public static void main(String[] args) {', '        System.out.println(maxProduct(new int[] {-2, 3, -4}));', '    }', '}'].join('\n'),
+      explanation: 'The negative-value swap preserves the previous minimum as the candidate for the new maximum. Considering value alone also handles zeros and starts a new product range after an unhelpful prefix.',
+      expectedOutput: '24'
+    }],
+    commonMistakes: ['Tracking only the maximum product and losing a useful negative minimum.', 'Initializing the answer to zero and failing on all-negative arrays.', 'Treating zero as an ordinary positive or negative value instead of allowing a restart.', 'Forgetting that negative times negative can produce the new maximum.'],
+    interviewNotes: ['State the invariant: currentMax and currentMin are the extreme products ending at the current index.', 'Expected complexity is O(n) time and O(1) auxiliary space.', 'Explain why the previous minimum is required when the current value is negative.', 'Follow-up: how would you return the actual subarray boundaries?', 'Common trap: copying Kadane’s one-state sum solution without adding the minimum product state.'],
+    quickChecks: [{
+      question: 'Why must the algorithm track a minimum product as well as a maximum?',
+      options: ['The array must be sorted first', 'A negative value can turn the minimum negative product into the maximum positive product', 'Minimum values are always the answer', 'Products cannot be compared directly'],
+      correctAnswer: 'A negative value can turn the minimum negative product into the maximum positive product',
+      explanation: 'For [-2, 3, -4], the previous minimum -6 becomes 24 after multiplying by -4.'
+    }, {
+      question: 'What does considering value by itself in the recurrence handle?',
+      options: ['Only duplicate values', 'Restarting after zero or an unhelpful prefix', 'Sorting the input', 'The second verification pass'],
+      correctAnswer: 'Restarting after zero or an unhelpful prefix',
+      explanation: 'The current value can begin a new contiguous range instead of extending the previous product.'
+    }, {
+      question: 'What is the safe initialization for a non-empty product problem?',
+      options: ['currentMax = 0 and answer = 0', 'Initialize from the first array value', 'Initialize from the largest value after sorting', 'Initialize both states to 1'],
+      correctAnswer: 'Initialize from the first array value',
+      explanation: 'This preserves correct negative answers and avoids inventing an empty product of zero.'
+    }],
+    practice: [{
+      title: 'Practice: return product range boundaries',
+      prompt: 'Extend the max/min product algorithm to return the start and end indices of the maximum-product subarray. Test [2, 3, -2, 4], [-2, 3, -4], [0, -2], and [-3, -2, -5]. Explain how a negative-value swap affects the index state.',
+      expectedSkill: 'Maintaining paired extrema while preserving the actual contiguous range through sign changes and zeros.'
+    }],
+    resources: [
+      { title: 'Maximum Product Subarray', url: 'https://leetcode.com/problems/maximum-product-subarray/', type: 'practice', description: 'Exact problem for testing negative products, zero restarts, and all-negative input.', source: 'LeetCode' },
+      { title: 'Maximum Product Subarray', url: 'https://www.geeksforgeeks.org/maximum-product-subarray/', type: 'tutorial', description: 'Focused explanation of tracking maximum and minimum products ending at each position.', source: 'GeeksforGeeks' }
+    ]
+  },
+  's1_d5_t3_3-sum-product': {
+    topicId: 's1_d5_t3_3-sum-product',
+    contentVersion: 1,
+    lastReviewedAt: '2026-10-01',
+    estimatedMinutes: 40,
+    overview: 'Find the contiguous subarray with the largest sum. Contiguous means the chosen elements occupy one uninterrupted range; skipping elements to form a subsequence is a different problem.',
+    whyItMatters: 'Kadane’s Algorithm demonstrates a reusable running-state pattern: at each value, either extend the best subarray ending immediately before it or start a new subarray at the current value.',
+    prerequisites: [JAVA_BASICS],
+    sections: [
+      {
+        title: 'Problem framing',
+        explanation: 'For [-2, 1, -3, 4, -1, 2, 1, -5, 4], the best contiguous range is [4, -1, 2, 1] with sum 6. The range cannot skip -1 even though skipping it would form a different non-contiguous selection.',
+        example: 'Input: [-2, 1, -3, 4, -1, 2, 1, -5, 4]\nBest subarray: [4, -1, 2, 1]\nOutput: 6',
+        takeaway: 'The answer is a contiguous interval, so every decision must preserve adjacency.'
+      },
+      {
+        title: 'Brute force and its cost',
+        explanation: 'Enumerate every start and end pair and accumulate each range. With a running sum per start this takes O(n^2) time and O(1) extra space. Recomputing every range sum from scratch would be O(n^3).',
+        example: 'for each start: extend end and update the range sum',
+        takeaway: 'The repeated work is reconsidering the same prefix of a range after its sum has already become unhelpful.'
+      },
+      {
+        title: 'Start fresh or extend',
+        explanation: 'For a subarray ending at the current value, the only useful choices are to start at the current value or extend the best subarray that ended at the previous position. Any earlier prefix is already summarized by that previous best.',
+        example: 'currentBest = max(value, currentBest + value);',
+        takeaway: 'A negative accumulated prefix can be discarded when the current value is a better starting point.'
+      },
+      {
+        title: 'Running state and invariant',
+        explanation: 'currentBest is the largest sum of any non-empty subarray ending exactly at the current index. globalBest is the largest currentBest seen anywhere. Keeping these two values is sufficient because future ranges can only extend the immediately previous ending position.',
+        example: 'currentBest = Math.max(value, currentBest + value);\nglobalBest = Math.max(globalBest, currentBest);',
+        takeaway: 'The state remembers both the best ending here and the best answer seen overall.'
+      },
+      {
+        title: 'Worked walkthrough',
+        explanation: 'For [-2, 1, -3, 4, -1, 2, 1, -5, 4], the current/global pairs are (-2,-2), (1,1), (-2,1), (4,4), (3,4), (5,5), (6,6), (1,6), (5,6). The answer is 6.',
+        example: 'value:        -2   1  -3   4  -1   2   1  -5   4\ncurrentBest: -2   1  -2   4   3   5   6   1   5\nglobalBest:  -2   1   1   4   4   5   6   6   6',
+        takeaway: 'The global answer does not have to end at the final element.'
+      },
+      {
+        title: 'All-negative arrays',
+        explanation: 'Initialize both values from the first array element, not zero. For [-8, -3, -6], the correct answer is -3. Starting globalBest at zero would incorrectly claim that an empty subarray with sum zero is allowed.',
+        example: 'int currentBest = values[0];\nint globalBest = values[0];',
+        takeaway: 'Kadane’s version here requires a non-empty subarray, so zero is not a safe default.'
+      },
+      {
+        title: 'Complexity and Java details',
+        explanation: 'The algorithm makes one pass and uses O(1) auxiliary space. Use int when the problem constraints fit int; otherwise use long for sums to avoid overflow. If the actual range is required, store the best start and end whenever globalBest improves.',
+        takeaway: 'The optimized sum is O(n) time and O(1) auxiliary space, with initialization and numeric type chosen from the contract.'
+      }
+    ],
+    examples: [{
+      title: 'Current best versus global best',
+      setup: 'Trace the sum state for [-2, 1, -3, 4, -1, 2, 1, -5, 4].',
+      walkthrough: [
+        'At -2, the only non-empty subarray ending here has sum -2, so both values are -2.',
+        'At 1, starting fresh gives 1, which beats extending -2 to -1.',
+        'At 4, the best ending here is 4 because the previous current best is negative.',
+        'At -1, extend 4 to get 3; the global best remains 4.',
+        'At 2 and then 1, extending produces 5 and 6, so the global best becomes 6.',
+        'The later -5 reduces the ending sum to 1, but the earlier global answer 6 is preserved.'
+      ],
+      takeaway: 'Current state serves future extensions; global state preserves the best completed answer.'
+    }],
+    codeExamples: [{
+      language: 'java',
+      executionMode: 'standalone',
+      filename: 'KadanesAlgorithm.java',
+      title: 'Maximum subarray sum with Kadane’s Algorithm',
+      code: ['public class KadanesAlgorithm {', '    static int maxSubarraySum(int[] values) {', '        int currentBest = values[0];', '        int globalBest = values[0];', '', '        for (int index = 1; index < values.length; index++) {', '            currentBest = Math.max(values[index], currentBest + values[index]);', '            globalBest = Math.max(globalBest, currentBest);', '        }', '', '        return globalBest;', '    }', '', '    public static void main(String[] args) {', '        int[] values = {-2, 1, -3, 4, -1, 2, 1, -5, 4};', '        System.out.println(maxSubarraySum(values));', '    }', '}'].join('\n'),
+      explanation: 'currentBest stores the best non-empty subarray ending at the current index. globalBest stores the best ending sum seen at any index. Initializing from values[0] keeps all-negative arrays correct.',
+      expectedOutput: '6'
+    }],
+    commonMistakes: ['Initializing the answer to 0 and accidentally allowing an empty subarray when the problem requires a non-empty one.', 'Confusing a contiguous subarray with a subsequence that may skip elements.', 'Tracking only the current sum and losing the best result found earlier.', 'Using int when the input constraints allow the running sum to overflow.'],
+    interviewNotes: ['State the invariant: currentBest is the best non-empty sum ending at the current index.', 'Expected complexity is O(n) time and O(1) auxiliary space.', 'Explain the fresh-start decision as discarding a negative prefix.', 'Follow-up: how would you return the actual start and end indices?', 'Common trap: initializing globalBest to zero for an all-negative input.'],
+    quickChecks: [{
+      question: 'What does currentBest represent in Kadane’s Algorithm?',
+      options: ['The best sum anywhere in the full array', 'The best non-empty sum ending at the current index', 'The number of positive values seen', 'The sum of every value seen so far'],
+      correctAnswer: 'The best non-empty sum ending at the current index',
+      explanation: 'Keeping the best ending at the current position lets the next value decide whether to extend or restart.'
+    }, {
+      question: 'Why should globalBest not start at zero for a non-empty subarray problem?',
+      options: ['Zero cannot be stored in an int', 'An all-negative array may have a negative answer', 'The first value is always positive', 'It would make the loop O(n squared)'],
+      correctAnswer: 'An all-negative array may have a negative answer',
+      explanation: 'For [-8, -3], the correct answer is -3, not zero from an empty selection.'
+    }, {
+      question: 'What decision does each value trigger?',
+      options: ['Sort or reverse the array', 'Start a new range or extend the previous best ending range', 'Add the value to every prior range', 'Choose the smallest value globally'],
+      correctAnswer: 'Start a new range or extend the previous best ending range',
+      explanation: 'Those are the only two contiguous subarrays that can end at the current value while preserving the optimal ending state.'
+    }],
+    practice: [{
+      title: 'Practice: return the best range',
+      prompt: 'Extend Kadane’s Algorithm so it returns the start and end indices of the best non-empty subarray, not only its sum. Dry-run your index updates on [-2, 1, -3, 4, -1, 2, 1, -5, 4] and on [-5, -2, -8].',
+      expectedSkill: 'Maintaining a running DP state while preserving the actual range and handling all-negative input.'
+    }],
+    resources: [
+      { title: 'Maximum Subarray', url: 'https://leetcode.com/problems/maximum-subarray/', type: 'practice', description: 'Exact problem for applying Kadane’s Algorithm and checking all-negative behavior.', source: 'LeetCode' },
+      { title: 'Kadane’s Algorithm', url: 'https://www.geeksforgeeks.org/largest-sum-contiguous-subarray-kadanes-algorithm/', type: 'tutorial', description: 'Focused explanation of the running best-ending-here state.', source: 'GeeksforGeeks' }
+    ]
+  },
+  's1_d5_t4_3-product': {
+    topicId: 's1_d5_t4_3-product',
+    contentVersion: 1,
+    lastReviewedAt: '2026-10-01',
+    estimatedMinutes: 40,
+    overview: 'Find the contiguous subarray with the largest product. Unlike maximum subarray sum, a negative value can turn a very small negative product into the largest positive product when multiplied by another negative value.',
+    whyItMatters: 'This problem teaches why one running state is not enough when an operation can reverse ordering. Tracking both the maximum and minimum product ending at the current position preserves the two values that a future negative number may need.',
+    prerequisites: [KADANES_ALGORITHM],
+    sections: [
+      {
+        title: 'Problem framing',
+        explanation: 'For [2, 3, -2, 4], the best contiguous product is 6 from [2, 3]. For [-2, 3, -4], the answer is 24 because the full range contains two negatives.',
+        example: 'Input: [2, 3, -2, 4]\nOutput: 6',
+        takeaway: 'The best range must remain contiguous, but its sign can change as values are multiplied.'
+      },
+      {
+        title: 'Brute force and its cost',
+        explanation: 'Enumerate every start index, multiply while extending the end, and keep the largest product. This is O(n^2) time and O(1) extra space. A frequency map or sorting cannot capture the order-sensitive product behavior.',
+        takeaway: 'The repeated work is evaluating many ranges that share the same ending product prefixes.'
+      },
+      {
+        title: 'Why maximum product differs from maximum sum',
+        explanation: 'For sums, a negative running sum is always harmful to a future positive addition. For products, the smallest negative product may become the largest positive product after multiplying by a negative value. Therefore, a negative input swaps the roles of the current maximum and minimum.',
+        example: 'currentMax = -2, currentMin = -6, value = -4\nnewMax may be (-6) * (-4) = 24',
+        takeaway: 'Multiplication can reverse order, so preserve both extremes.'
+      },
+      {
+        title: 'Maximum and minimum ending here',
+        explanation: 'At each value, the new maximum and minimum can come from the value alone, the previous maximum times the value, or the previous minimum times the value. If the value is negative, swap the previous max and min before calculating so the formulas stay simple.',
+        example: 'maxEnding = max(value, previousMax * value)\nminEnding = min(value, previousMin * value)',
+        takeaway: 'The pair (maxEnding, minEnding) is the sufficient state for the next position.'
+      },
+      {
+        title: 'Worked walkthrough',
+        explanation: 'For [2, 3, -2, 4], the state begins (2,2), becomes (6,6), then after -2 becomes (-2,-12), and finally becomes (4,-48). The global maximum remains 6. For [-2, 3, -4], the states are (-2,-2), (3,-6), then (24,-12), exposing why the minimum must be retained.',
+        example: 'Input: [-2, 3, -4]\nvalue -2 -> max -2, min -2\nvalue 3  -> max 3, min -6\nvalue -4 -> max 24, min -12',
+        takeaway: 'The minimum state can become the final maximum after a later negative value.'
+      },
+      {
+        title: 'Zero and all-negative inputs',
+        explanation: 'Zero can restart a product because any range crossing zero has product zero. The max/min recurrence naturally considers the value itself, so a value after zero starts a new range. Initialize from the first value so arrays such as [-3, -2, -5] return -2 rather than zero.',
+        takeaway: 'Do not initialize the answer to zero when the required subarray is non-empty.'
+      },
+      {
+        title: 'Complexity and Java details',
+        explanation: 'The algorithm runs in O(n) time and O(1) auxiliary space. Use long instead of int when constraints allow products to exceed the int range. Tracking the actual range requires additional start/end bookkeeping.',
+        takeaway: 'The optimized solution keeps two scalar states instead of every possible product range.'
+      }
+    ],
+    examples: [{
+      title: 'Negative values reverse the useful state',
+      setup: 'Trace [-2, 3, -4].',
+      walkthrough: [
+        'At -2, both maximum and minimum ending products are -2.',
+        'At 3, start fresh with 3 for the maximum, while extending -2 gives -6 for the minimum.',
+        'At -4, the previous minimum -6 becomes valuable because (-6) * (-4) = 24.',
+        'The global answer is therefore 24 from the entire array.'
+      ],
+      takeaway: 'Tracking only the previous maximum would miss the product that becomes optimal after the second negative.'
+    }],
+    codeExamples: [{
+      language: 'java',
+      executionMode: 'standalone',
+      filename: 'MaximumProductSubarray.java',
+      title: 'Maximum product subarray with max/min state',
+      code: ['public class MaximumProductSubarray {', '    static int maxProduct(int[] values) {', '        int currentMax = values[0];', '        int currentMin = values[0];', '        int answer = values[0];', '', '        for (int index = 1; index < values.length; index++) {', '            int value = values[index];', '            if (value < 0) {', '                int temporary = currentMax;', '                currentMax = currentMin;', '                currentMin = temporary;', '            }', '', '            currentMax = Math.max(value, currentMax * value);', '            currentMin = Math.min(value, currentMin * value);', '            answer = Math.max(answer, currentMax);', '        }', '', '        return answer;', '    }', '', '    public static void main(String[] args) {', '        System.out.println(maxProduct(new int[] {-2, 3, -4}));', '    }', '}'].join('\n'),
+      explanation: 'The negative-value swap preserves the previous minimum as the candidate for the new maximum. Considering value alone also handles zeros and starts a new product range after an unhelpful prefix.',
+      expectedOutput: '24'
+    }],
+    commonMistakes: ['Tracking only the maximum product and losing a useful negative minimum.', 'Initializing the answer to zero and failing on all-negative arrays.', 'Treating zero as an ordinary positive or negative value instead of allowing a restart.', 'Forgetting that negative times negative can produce the new maximum.'],
+    interviewNotes: ['State the invariant: currentMax and currentMin are the extreme products ending at the current index.', 'Expected complexity is O(n) time and O(1) auxiliary space.', 'Explain why the previous minimum is required when the current value is negative.', 'Follow-up: how would you return the actual subarray boundaries?', 'Common trap: copying Kadane’s one-state sum solution without adding the minimum product state.'],
+    quickChecks: [{
+      question: 'Why must the algorithm track a minimum product as well as a maximum?',
+      options: ['The array must be sorted first', 'A negative value can turn the minimum negative product into the maximum positive product', 'Minimum values are always the answer', 'Products cannot be compared directly'],
+      correctAnswer: 'A negative value can turn the minimum negative product into the maximum positive product',
+      explanation: 'For [-2, 3, -4], the previous minimum -6 becomes 24 after multiplying by -4.'
+    }, {
+      question: 'What does considering value by itself in the recurrence handle?',
+      options: ['Only duplicate values', 'Restarting after zero or an unhelpful prefix', 'Sorting the input', 'The second verification pass'],
+      correctAnswer: 'Restarting after zero or an unhelpful prefix',
+      explanation: 'The current value can begin a new contiguous range instead of extending the previous product.'
+    }, {
+      question: 'What is the safe initialization for a non-empty product problem?',
+      options: ['currentMax = 0 and answer = 0', 'Initialize from the first array value', 'Initialize from the largest value after sorting', 'Initialize both states to 1'],
+      correctAnswer: 'Initialize from the first array value',
+      explanation: 'This preserves correct negative answers and avoids inventing an empty product of zero.'
+    }],
+    practice: [{
+      title: 'Practice: return product range boundaries',
+      prompt: 'Extend the max/min product algorithm to return the start and end indices of the maximum-product subarray. Test [2, 3, -2, 4], [-2, 3, -4], [0, -2], and [-3, -2, -5]. Explain how a negative-value swap affects the index state.',
+      expectedSkill: 'Maintaining paired extrema while preserving the actual contiguous range through sign changes and zeros.'
+    }],
+    resources: [
+      { title: 'Maximum Product Subarray', url: 'https://leetcode.com/problems/maximum-product-subarray/', type: 'practice', description: 'Exact problem for testing negative products, zero restarts, and all-negative input.', source: 'LeetCode' },
+      { title: 'Maximum Product Subarray', url: 'https://www.geeksforgeeks.org/maximum-product-subarray/', type: 'tutorial', description: 'Focused explanation of tracking maximum and minimum products ending at each position.', source: 'GeeksforGeeks' }
+    ]
+  },
+  's1_d5_t5_3-sum-product': {
+    topicId: 's1_d5_t5_3-sum-product',
+    contentVersion: 1,
+    lastReviewedAt: '2026-10-01',
+    estimatedMinutes: 40,
+    overview: 'Find the contiguous subarray with the largest sum. Contiguous means the chosen elements occupy one uninterrupted range; skipping elements to form a subsequence is a different problem.',
+    whyItMatters: 'Kadane’s Algorithm demonstrates a reusable running-state pattern: at each value, either extend the best subarray ending immediately before it or start a new subarray at the current value.',
+    prerequisites: [JAVA_BASICS],
+    sections: [
+      {
+        title: 'Problem framing',
+        explanation: 'For [-2, 1, -3, 4, -1, 2, 1, -5, 4], the best contiguous range is [4, -1, 2, 1] with sum 6. The range cannot skip -1 even though skipping it would form a different non-contiguous selection.',
+        example: 'Input: [-2, 1, -3, 4, -1, 2, 1, -5, 4]\nBest subarray: [4, -1, 2, 1]\nOutput: 6',
+        takeaway: 'The answer is a contiguous interval, so every decision must preserve adjacency.'
+      },
+      {
+        title: 'Brute force and its cost',
+        explanation: 'Enumerate every start and end pair and accumulate each range. With a running sum per start this takes O(n^2) time and O(1) extra space. Recomputing every range sum from scratch would be O(n^3).',
+        example: 'for each start: extend end and update the range sum',
+        takeaway: 'The repeated work is reconsidering the same prefix of a range after its sum has already become unhelpful.'
+      },
+      {
+        title: 'Start fresh or extend',
+        explanation: 'For a subarray ending at the current value, the only useful choices are to start at the current value or extend the best subarray that ended at the previous position. Any earlier prefix is already summarized by that previous best.',
+        example: 'currentBest = max(value, currentBest + value);',
+        takeaway: 'A negative accumulated prefix can be discarded when the current value is a better starting point.'
+      },
+      {
+        title: 'Running state and invariant',
+        explanation: 'currentBest is the largest sum of any non-empty subarray ending exactly at the current index. globalBest is the largest currentBest seen anywhere. Keeping these two values is sufficient because future ranges can only extend the immediately previous ending position.',
+        example: 'currentBest = Math.max(value, currentBest + value);\nglobalBest = Math.max(globalBest, currentBest);',
+        takeaway: 'The state remembers both the best ending here and the best answer seen overall.'
+      },
+      {
+        title: 'Worked walkthrough',
+        explanation: 'For [-2, 1, -3, 4, -1, 2, 1, -5, 4], the current/global pairs are (-2,-2), (1,1), (-2,1), (4,4), (3,4), (5,5), (6,6), (1,6), (5,6). The answer is 6.',
+        example: 'value:        -2   1  -3   4  -1   2   1  -5   4\ncurrentBest: -2   1  -2   4   3   5   6   1   5\nglobalBest:  -2   1   1   4   4   5   6   6   6',
+        takeaway: 'The global answer does not have to end at the final element.'
+      },
+      {
+        title: 'All-negative arrays',
+        explanation: 'Initialize both values from the first array element, not zero. For [-8, -3, -6], the correct answer is -3. Starting globalBest at zero would incorrectly claim that an empty subarray with sum zero is allowed.',
+        example: 'int currentBest = values[0];\nint globalBest = values[0];',
+        takeaway: 'Kadane’s version here requires a non-empty subarray, so zero is not a safe default.'
+      },
+      {
+        title: 'Complexity and Java details',
+        explanation: 'The algorithm makes one pass and uses O(1) auxiliary space. Use int when the problem constraints fit int; otherwise use long for sums to avoid overflow. If the actual range is required, store the best start and end whenever globalBest improves.',
+        takeaway: 'The optimized sum is O(n) time and O(1) auxiliary space, with initialization and numeric type chosen from the contract.'
+      }
+    ],
+    examples: [{
+      title: 'Current best versus global best',
+      setup: 'Trace the sum state for [-2, 1, -3, 4, -1, 2, 1, -5, 4].',
+      walkthrough: [
+        'At -2, the only non-empty subarray ending here has sum -2, so both values are -2.',
+        'At 1, starting fresh gives 1, which beats extending -2 to -1.',
+        'At 4, the best ending here is 4 because the previous current best is negative.',
+        'At -1, extend 4 to get 3; the global best remains 4.',
+        'At 2 and then 1, extending produces 5 and 6, so the global best becomes 6.',
+        'The later -5 reduces the ending sum to 1, but the earlier global answer 6 is preserved.'
+      ],
+      takeaway: 'Current state serves future extensions; global state preserves the best completed answer.'
+    }],
+    codeExamples: [{
+      language: 'java',
+      executionMode: 'standalone',
+      filename: 'KadanesAlgorithm.java',
+      title: 'Maximum subarray sum with Kadane’s Algorithm',
+      code: ['public class KadanesAlgorithm {', '    static int maxSubarraySum(int[] values) {', '        int currentBest = values[0];', '        int globalBest = values[0];', '', '        for (int index = 1; index < values.length; index++) {', '            currentBest = Math.max(values[index], currentBest + values[index]);', '            globalBest = Math.max(globalBest, currentBest);', '        }', '', '        return globalBest;', '    }', '', '    public static void main(String[] args) {', '        int[] values = {-2, 1, -3, 4, -1, 2, 1, -5, 4};', '        System.out.println(maxSubarraySum(values));', '    }', '}'].join('\n'),
+      explanation: 'currentBest stores the best non-empty subarray ending at the current index. globalBest stores the best ending sum seen at any index. Initializing from values[0] keeps all-negative arrays correct.',
+      expectedOutput: '6'
+    }],
+    commonMistakes: ['Initializing the answer to 0 and accidentally allowing an empty subarray when the problem requires a non-empty one.', 'Confusing a contiguous subarray with a subsequence that may skip elements.', 'Tracking only the current sum and losing the best result found earlier.', 'Using int when the input constraints allow the running sum to overflow.'],
+    interviewNotes: ['State the invariant: currentBest is the best non-empty sum ending at the current index.', 'Expected complexity is O(n) time and O(1) auxiliary space.', 'Explain the fresh-start decision as discarding a negative prefix.', 'Follow-up: how would you return the actual start and end indices?', 'Common trap: initializing globalBest to zero for an all-negative input.'],
+    quickChecks: [{
+      question: 'What does currentBest represent in Kadane’s Algorithm?',
+      options: ['The best sum anywhere in the full array', 'The best non-empty sum ending at the current index', 'The number of positive values seen', 'The sum of every value seen so far'],
+      correctAnswer: 'The best non-empty sum ending at the current index',
+      explanation: 'Keeping the best ending at the current position lets the next value decide whether to extend or restart.'
+    }, {
+      question: 'Why should globalBest not start at zero for a non-empty subarray problem?',
+      options: ['Zero cannot be stored in an int', 'An all-negative array may have a negative answer', 'The first value is always positive', 'It would make the loop O(n squared)'],
+      correctAnswer: 'An all-negative array may have a negative answer',
+      explanation: 'For [-8, -3], the correct answer is -3, not zero from an empty selection.'
+    }, {
+      question: 'What decision does each value trigger?',
+      options: ['Sort or reverse the array', 'Start a new range or extend the previous best ending range', 'Add the value to every prior range', 'Choose the smallest value globally'],
+      correctAnswer: 'Start a new range or extend the previous best ending range',
+      explanation: 'Those are the only two contiguous subarrays that can end at the current value while preserving the optimal ending state.'
+    }],
+    practice: [{
+      title: 'Practice: return the best range',
+      prompt: 'Extend Kadane’s Algorithm so it returns the start and end indices of the best non-empty subarray, not only its sum. Dry-run your index updates on [-2, 1, -3, 4, -1, 2, 1, -5, 4] and on [-5, -2, -8].',
+      expectedSkill: 'Maintaining a running DP state while preserving the actual range and handling all-negative input.'
+    }],
+    resources: [
+      { title: 'Maximum Subarray', url: 'https://leetcode.com/problems/maximum-subarray/', type: 'practice', description: 'Exact problem for applying Kadane’s Algorithm and checking all-negative behavior.', source: 'LeetCode' },
+      { title: 'Kadane’s Algorithm', url: 'https://www.geeksforgeeks.org/largest-sum-contiguous-subarray-kadanes-algorithm/', type: 'tutorial', description: 'Focused explanation of the running best-ending-here state.', source: 'GeeksforGeeks' }
+    ]
+  },
+  's1_d5_t6_3-product': {
+    topicId: 's1_d5_t6_3-product',
+    contentVersion: 1,
+    lastReviewedAt: '2026-10-01',
+    estimatedMinutes: 40,
+    overview: 'Find the contiguous subarray with the largest product. Unlike maximum subarray sum, a negative value can turn a very small negative product into the largest positive product when multiplied by another negative value.',
+    whyItMatters: 'This problem teaches why one running state is not enough when an operation can reverse ordering. Tracking both the maximum and minimum product ending at the current position preserves the two values that a future negative number may need.',
+    prerequisites: [KADANES_ALGORITHM],
+    sections: [
+      {
+        title: 'Problem framing',
+        explanation: 'For [2, 3, -2, 4], the best contiguous product is 6 from [2, 3]. For [-2, 3, -4], the answer is 24 because the full range contains two negatives.',
+        example: 'Input: [2, 3, -2, 4]\nOutput: 6',
+        takeaway: 'The best range must remain contiguous, but its sign can change as values are multiplied.'
+      },
+      {
+        title: 'Brute force and its cost',
+        explanation: 'Enumerate every start index, multiply while extending the end, and keep the largest product. This is O(n^2) time and O(1) extra space. A frequency map or sorting cannot capture the order-sensitive product behavior.',
+        takeaway: 'The repeated work is evaluating many ranges that share the same ending product prefixes.'
+      },
+      {
+        title: 'Why maximum product differs from maximum sum',
+        explanation: 'For sums, a negative running sum is always harmful to a future positive addition. For products, the smallest negative product may become the largest positive product after multiplying by a negative value. Therefore, a negative input swaps the roles of the current maximum and minimum.',
+        example: 'currentMax = -2, currentMin = -6, value = -4\nnewMax may be (-6) * (-4) = 24',
+        takeaway: 'Multiplication can reverse order, so preserve both extremes.'
+      },
+      {
+        title: 'Maximum and minimum ending here',
+        explanation: 'At each value, the new maximum and minimum can come from the value alone, the previous maximum times the value, or the previous minimum times the value. If the value is negative, swap the previous max and min before calculating so the formulas stay simple.',
+        example: 'maxEnding = max(value, previousMax * value)\nminEnding = min(value, previousMin * value)',
+        takeaway: 'The pair (maxEnding, minEnding) is the sufficient state for the next position.'
+      },
+      {
+        title: 'Worked walkthrough',
+        explanation: 'For [2, 3, -2, 4], the state begins (2,2), becomes (6,6), then after -2 becomes (-2,-12), and finally becomes (4,-48). The global maximum remains 6. For [-2, 3, -4], the states are (-2,-2), (3,-6), then (24,-12), exposing why the minimum must be retained.',
+        example: 'Input: [-2, 3, -4]\nvalue -2 -> max -2, min -2\nvalue 3  -> max 3, min -6\nvalue -4 -> max 24, min -12',
+        takeaway: 'The minimum state can become the final maximum after a later negative value.'
+      },
+      {
+        title: 'Zero and all-negative inputs',
+        explanation: 'Zero can restart a product because any range crossing zero has product zero. The max/min recurrence naturally considers the value itself, so a value after zero starts a new range. Initialize from the first value so arrays such as [-3, -2, -5] return -2 rather than zero.',
+        takeaway: 'Do not initialize the answer to zero when the required subarray is non-empty.'
+      },
+      {
+        title: 'Complexity and Java details',
+        explanation: 'The algorithm runs in O(n) time and O(1) auxiliary space. Use long instead of int when constraints allow products to exceed the int range. Tracking the actual range requires additional start/end bookkeeping.',
+        takeaway: 'The optimized solution keeps two scalar states instead of every possible product range.'
+      }
+    ],
+    examples: [{
+      title: 'Negative values reverse the useful state',
+      setup: 'Trace [-2, 3, -4].',
+      walkthrough: [
+        'At -2, both maximum and minimum ending products are -2.',
+        'At 3, start fresh with 3 for the maximum, while extending -2 gives -6 for the minimum.',
+        'At -4, the previous minimum -6 becomes valuable because (-6) * (-4) = 24.',
+        'The global answer is therefore 24 from the entire array.'
+      ],
+      takeaway: 'Tracking only the previous maximum would miss the product that becomes optimal after the second negative.'
+    }],
+    codeExamples: [{
+      language: 'java',
+      executionMode: 'standalone',
+      filename: 'MaximumProductSubarray.java',
+      title: 'Maximum product subarray with max/min state',
+      code: ['public class MaximumProductSubarray {', '    static int maxProduct(int[] values) {', '        int currentMax = values[0];', '        int currentMin = values[0];', '        int answer = values[0];', '', '        for (int index = 1; index < values.length; index++) {', '            int value = values[index];', '            if (value < 0) {', '                int temporary = currentMax;', '                currentMax = currentMin;', '                currentMin = temporary;', '            }', '', '            currentMax = Math.max(value, currentMax * value);', '            currentMin = Math.min(value, currentMin * value);', '            answer = Math.max(answer, currentMax);', '        }', '', '        return answer;', '    }', '', '    public static void main(String[] args) {', '        System.out.println(maxProduct(new int[] {-2, 3, -4}));', '    }', '}'].join('\n'),
+      explanation: 'The negative-value swap preserves the previous minimum as the candidate for the new maximum. Considering value alone also handles zeros and starts a new product range after an unhelpful prefix.',
+      expectedOutput: '24'
+    }],
+    commonMistakes: ['Tracking only the maximum product and losing a useful negative minimum.', 'Initializing the answer to zero and failing on all-negative arrays.', 'Treating zero as an ordinary positive or negative value instead of allowing a restart.', 'Forgetting that negative times negative can produce the new maximum.'],
+    interviewNotes: ['State the invariant: currentMax and currentMin are the extreme products ending at the current index.', 'Expected complexity is O(n) time and O(1) auxiliary space.', 'Explain why the previous minimum is required when the current value is negative.', 'Follow-up: how would you return the actual subarray boundaries?', 'Common trap: copying Kadane’s one-state sum solution without adding the minimum product state.'],
+    quickChecks: [{
+      question: 'Why must the algorithm track a minimum product as well as a maximum?',
+      options: ['The array must be sorted first', 'A negative value can turn the minimum negative product into the maximum positive product', 'Minimum values are always the answer', 'Products cannot be compared directly'],
+      correctAnswer: 'A negative value can turn the minimum negative product into the maximum positive product',
+      explanation: 'For [-2, 3, -4], the previous minimum -6 becomes 24 after multiplying by -4.'
+    }, {
+      question: 'What does considering value by itself in the recurrence handle?',
+      options: ['Only duplicate values', 'Restarting after zero or an unhelpful prefix', 'Sorting the input', 'The second verification pass'],
+      correctAnswer: 'Restarting after zero or an unhelpful prefix',
+      explanation: 'The current value can begin a new contiguous range instead of extending the previous product.'
+    }, {
+      question: 'What is the safe initialization for a non-empty product problem?',
+      options: ['currentMax = 0 and answer = 0', 'Initialize from the first array value', 'Initialize from the largest value after sorting', 'Initialize both states to 1'],
+      correctAnswer: 'Initialize from the first array value',
+      explanation: 'This preserves correct negative answers and avoids inventing an empty product of zero.'
+    }],
+    practice: [{
+      title: 'Practice: return product range boundaries',
+      prompt: 'Extend the max/min product algorithm to return the start and end indices of the maximum-product subarray. Test [2, 3, -2, 4], [-2, 3, -4], [0, -2], and [-3, -2, -5]. Explain how a negative-value swap affects the index state.',
+      expectedSkill: 'Maintaining paired extrema while preserving the actual contiguous range through sign changes and zeros.'
+    }],
+    resources: [
+      { title: 'Maximum Product Subarray', url: 'https://leetcode.com/problems/maximum-product-subarray/', type: 'practice', description: 'Exact problem for testing negative products, zero restarts, and all-negative input.', source: 'LeetCode' },
+      { title: 'Maximum Product Subarray', url: 'https://www.geeksforgeeks.org/maximum-product-subarray/', type: 'tutorial', description: 'Focused explanation of tracking maximum and minimum products ending at each position.', source: 'GeeksforGeeks' }
+    ]
+  },
+  's1_d5_t7_3-sum-product': {
+    topicId: 's1_d5_t7_3-sum-product',
+    contentVersion: 1,
+    lastReviewedAt: '2026-10-01',
+    estimatedMinutes: 40,
+    overview: 'Find the contiguous subarray with the largest sum. Contiguous means the chosen elements occupy one uninterrupted range; skipping elements to form a subsequence is a different problem.',
+    whyItMatters: 'Kadane’s Algorithm demonstrates a reusable running-state pattern: at each value, either extend the best subarray ending immediately before it or start a new subarray at the current value.',
+    prerequisites: [JAVA_BASICS],
+    sections: [
+      {
+        title: 'Problem framing',
+        explanation: 'For [-2, 1, -3, 4, -1, 2, 1, -5, 4], the best contiguous range is [4, -1, 2, 1] with sum 6. The range cannot skip -1 even though skipping it would form a different non-contiguous selection.',
+        example: 'Input: [-2, 1, -3, 4, -1, 2, 1, -5, 4]\nBest subarray: [4, -1, 2, 1]\nOutput: 6',
+        takeaway: 'The answer is a contiguous interval, so every decision must preserve adjacency.'
+      },
+      {
+        title: 'Brute force and its cost',
+        explanation: 'Enumerate every start and end pair and accumulate each range. With a running sum per start this takes O(n^2) time and O(1) extra space. Recomputing every range sum from scratch would be O(n^3).',
+        example: 'for each start: extend end and update the range sum',
+        takeaway: 'The repeated work is reconsidering the same prefix of a range after its sum has already become unhelpful.'
+      },
+      {
+        title: 'Start fresh or extend',
+        explanation: 'For a subarray ending at the current value, the only useful choices are to start at the current value or extend the best subarray that ended at the previous position. Any earlier prefix is already summarized by that previous best.',
+        example: 'currentBest = max(value, currentBest + value);',
+        takeaway: 'A negative accumulated prefix can be discarded when the current value is a better starting point.'
+      },
+      {
+        title: 'Running state and invariant',
+        explanation: 'currentBest is the largest sum of any non-empty subarray ending exactly at the current index. globalBest is the largest currentBest seen anywhere. Keeping these two values is sufficient because future ranges can only extend the immediately previous ending position.',
+        example: 'currentBest = Math.max(value, currentBest + value);\nglobalBest = Math.max(globalBest, currentBest);',
+        takeaway: 'The state remembers both the best ending here and the best answer seen overall.'
+      },
+      {
+        title: 'Worked walkthrough',
+        explanation: 'For [-2, 1, -3, 4, -1, 2, 1, -5, 4], the current/global pairs are (-2,-2), (1,1), (-2,1), (4,4), (3,4), (5,5), (6,6), (1,6), (5,6). The answer is 6.',
+        example: 'value:        -2   1  -3   4  -1   2   1  -5   4\ncurrentBest: -2   1  -2   4   3   5   6   1   5\nglobalBest:  -2   1   1   4   4   5   6   6   6',
+        takeaway: 'The global answer does not have to end at the final element.'
+      },
+      {
+        title: 'All-negative arrays',
+        explanation: 'Initialize both values from the first array element, not zero. For [-8, -3, -6], the correct answer is -3. Starting globalBest at zero would incorrectly claim that an empty subarray with sum zero is allowed.',
+        example: 'int currentBest = values[0];\nint globalBest = values[0];',
+        takeaway: 'Kadane’s version here requires a non-empty subarray, so zero is not a safe default.'
+      },
+      {
+        title: 'Complexity and Java details',
+        explanation: 'The algorithm makes one pass and uses O(1) auxiliary space. Use int when the problem constraints fit int; otherwise use long for sums to avoid overflow. If the actual range is required, store the best start and end whenever globalBest improves.',
+        takeaway: 'The optimized sum is O(n) time and O(1) auxiliary space, with initialization and numeric type chosen from the contract.'
+      }
+    ],
+    examples: [{
+      title: 'Current best versus global best',
+      setup: 'Trace the sum state for [-2, 1, -3, 4, -1, 2, 1, -5, 4].',
+      walkthrough: [
+        'At -2, the only non-empty subarray ending here has sum -2, so both values are -2.',
+        'At 1, starting fresh gives 1, which beats extending -2 to -1.',
+        'At 4, the best ending here is 4 because the previous current best is negative.',
+        'At -1, extend 4 to get 3; the global best remains 4.',
+        'At 2 and then 1, extending produces 5 and 6, so the global best becomes 6.',
+        'The later -5 reduces the ending sum to 1, but the earlier global answer 6 is preserved.'
+      ],
+      takeaway: 'Current state serves future extensions; global state preserves the best completed answer.'
+    }],
+    codeExamples: [{
+      language: 'java',
+      executionMode: 'standalone',
+      filename: 'KadanesAlgorithm.java',
+      title: 'Maximum subarray sum with Kadane’s Algorithm',
+      code: ['public class KadanesAlgorithm {', '    static int maxSubarraySum(int[] values) {', '        int currentBest = values[0];', '        int globalBest = values[0];', '', '        for (int index = 1; index < values.length; index++) {', '            currentBest = Math.max(values[index], currentBest + values[index]);', '            globalBest = Math.max(globalBest, currentBest);', '        }', '', '        return globalBest;', '    }', '', '    public static void main(String[] args) {', '        int[] values = {-2, 1, -3, 4, -1, 2, 1, -5, 4};', '        System.out.println(maxSubarraySum(values));', '    }', '}'].join('\n'),
+      explanation: 'currentBest stores the best non-empty subarray ending at the current index. globalBest stores the best ending sum seen at any index. Initializing from values[0] keeps all-negative arrays correct.',
+      expectedOutput: '6'
+    }],
+    commonMistakes: ['Initializing the answer to 0 and accidentally allowing an empty subarray when the problem requires a non-empty one.', 'Confusing a contiguous subarray with a subsequence that may skip elements.', 'Tracking only the current sum and losing the best result found earlier.', 'Using int when the input constraints allow the running sum to overflow.'],
+    interviewNotes: ['State the invariant: currentBest is the best non-empty sum ending at the current index.', 'Expected complexity is O(n) time and O(1) auxiliary space.', 'Explain the fresh-start decision as discarding a negative prefix.', 'Follow-up: how would you return the actual start and end indices?', 'Common trap: initializing globalBest to zero for an all-negative input.'],
+    quickChecks: [{
+      question: 'What does currentBest represent in Kadane’s Algorithm?',
+      options: ['The best sum anywhere in the full array', 'The best non-empty sum ending at the current index', 'The number of positive values seen', 'The sum of every value seen so far'],
+      correctAnswer: 'The best non-empty sum ending at the current index',
+      explanation: 'Keeping the best ending at the current position lets the next value decide whether to extend or restart.'
+    }, {
+      question: 'Why should globalBest not start at zero for a non-empty subarray problem?',
+      options: ['Zero cannot be stored in an int', 'An all-negative array may have a negative answer', 'The first value is always positive', 'It would make the loop O(n squared)'],
+      correctAnswer: 'An all-negative array may have a negative answer',
+      explanation: 'For [-8, -3], the correct answer is -3, not zero from an empty selection.'
+    }, {
+      question: 'What decision does each value trigger?',
+      options: ['Sort or reverse the array', 'Start a new range or extend the previous best ending range', 'Add the value to every prior range', 'Choose the smallest value globally'],
+      correctAnswer: 'Start a new range or extend the previous best ending range',
+      explanation: 'Those are the only two contiguous subarrays that can end at the current value while preserving the optimal ending state.'
+    }],
+    practice: [{
+      title: 'Practice: return the best range',
+      prompt: 'Extend Kadane’s Algorithm so it returns the start and end indices of the best non-empty subarray, not only its sum. Dry-run your index updates on [-2, 1, -3, 4, -1, 2, 1, -5, 4] and on [-5, -2, -8].',
+      expectedSkill: 'Maintaining a running DP state while preserving the actual range and handling all-negative input.'
+    }],
+    resources: [
+      { title: 'Maximum Subarray', url: 'https://leetcode.com/problems/maximum-subarray/', type: 'practice', description: 'Exact problem for applying Kadane’s Algorithm and checking all-negative behavior.', source: 'LeetCode' },
+      { title: 'Kadane’s Algorithm', url: 'https://www.geeksforgeeks.org/largest-sum-contiguous-subarray-kadanes-algorithm/', type: 'tutorial', description: 'Focused explanation of the running best-ending-here state.', source: 'GeeksforGeeks' }
+    ]
+  },
+  's1_d5_t8_3-product': {
+    topicId: 's1_d5_t8_3-product',
+    contentVersion: 1,
+    lastReviewedAt: '2026-10-01',
+    estimatedMinutes: 40,
+    overview: 'Find the contiguous subarray with the largest product. Unlike maximum subarray sum, a negative value can turn a very small negative product into the largest positive product when multiplied by another negative value.',
+    whyItMatters: 'This problem teaches why one running state is not enough when an operation can reverse ordering. Tracking both the maximum and minimum product ending at the current position preserves the two values that a future negative number may need.',
+    prerequisites: [KADANES_ALGORITHM],
+    sections: [
+      {
+        title: 'Problem framing',
+        explanation: 'For [2, 3, -2, 4], the best contiguous product is 6 from [2, 3]. For [-2, 3, -4], the answer is 24 because the full range contains two negatives.',
+        example: 'Input: [2, 3, -2, 4]\nOutput: 6',
+        takeaway: 'The best range must remain contiguous, but its sign can change as values are multiplied.'
+      },
+      {
+        title: 'Brute force and its cost',
+        explanation: 'Enumerate every start index, multiply while extending the end, and keep the largest product. This is O(n^2) time and O(1) extra space. A frequency map or sorting cannot capture the order-sensitive product behavior.',
+        takeaway: 'The repeated work is evaluating many ranges that share the same ending product prefixes.'
+      },
+      {
+        title: 'Why maximum product differs from maximum sum',
+        explanation: 'For sums, a negative running sum is always harmful to a future positive addition. For products, the smallest negative product may become the largest positive product after multiplying by a negative value. Therefore, a negative input swaps the roles of the current maximum and minimum.',
+        example: 'currentMax = -2, currentMin = -6, value = -4\nnewMax may be (-6) * (-4) = 24',
+        takeaway: 'Multiplication can reverse order, so preserve both extremes.'
+      },
+      {
+        title: 'Maximum and minimum ending here',
+        explanation: 'At each value, the new maximum and minimum can come from the value alone, the previous maximum times the value, or the previous minimum times the value. If the value is negative, swap the previous max and min before calculating so the formulas stay simple.',
+        example: 'maxEnding = max(value, previousMax * value)\nminEnding = min(value, previousMin * value)',
+        takeaway: 'The pair (maxEnding, minEnding) is the sufficient state for the next position.'
+      },
+      {
+        title: 'Worked walkthrough',
+        explanation: 'For [2, 3, -2, 4], the state begins (2,2), becomes (6,6), then after -2 becomes (-2,-12), and finally becomes (4,-48). The global maximum remains 6. For [-2, 3, -4], the states are (-2,-2), (3,-6), then (24,-12), exposing why the minimum must be retained.',
+        example: 'Input: [-2, 3, -4]\nvalue -2 -> max -2, min -2\nvalue 3  -> max 3, min -6\nvalue -4 -> max 24, min -12',
+        takeaway: 'The minimum state can become the final maximum after a later negative value.'
+      },
+      {
+        title: 'Zero and all-negative inputs',
+        explanation: 'Zero can restart a product because any range crossing zero has product zero. The max/min recurrence naturally considers the value itself, so a value after zero starts a new range. Initialize from the first value so arrays such as [-3, -2, -5] return -2 rather than zero.',
+        takeaway: 'Do not initialize the answer to zero when the required subarray is non-empty.'
+      },
+      {
+        title: 'Complexity and Java details',
+        explanation: 'The algorithm runs in O(n) time and O(1) auxiliary space. Use long
